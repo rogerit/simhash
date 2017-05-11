@@ -86,6 +86,8 @@ public class MetaString {
 		return HtmlTagFilter.html2Text(this.getText());
 	}
 	
+	
+	
 	public List<String> chnsTokens(){
 		IWordSeg bw = new ChnsWordSeg();
 		List<String> tokens = bw.tokens(this.filteredText());

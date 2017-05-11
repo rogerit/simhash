@@ -6,29 +6,32 @@ import java.net.URL;
 import java.util.List;
 
 
+
+
+import org.ansj.splitWord.analysis.ToAnalysis;
+
 import com.gpower.algorithm.simhash.MetaString.MetaString;
+import com.gpower.algorithm.simhash.hash.Simhash;
 
 public class Main {
 	
 	public static void main(String[] args) throws IOException {
 
+		
 		test1();
 		test2();
-		test3();
-		test4();
-		
-		test5();
-		
-		test6();
 		
 		
-		
+	}
+	
+	public static void test7(){
+		 String str = "欢迎使用ansj_seg,(ansj中文分词)在这里如果你遇到什么问题都可以联系我.我一定尽我所能.帮助大家.ansj_seg更快,更准,更自由!" ;
+		 System.out.println(ToAnalysis.parse(str));
 	}
 	
 	public static void test1(){
 		MetaString ms1 = new MetaString(new File("D:\\temp/1.html")); 
 		MetaString ms2 = new MetaString(new File("D:\\temp/3.html")); 
-		
 		
 		Simhash sh = new Simhash();
 		int h321 = sh.simhash32(ms1.chnsTokens());
@@ -59,6 +62,8 @@ public class Main {
 		System.out.println(Long.toBinaryString(h1^h2));
 		System.out.println(sh.hammingDistance(h1, h2));
 		System.out.println();
+		
+		
 		
 	}
 	public static void test3(){
