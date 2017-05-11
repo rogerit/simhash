@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.gpower.algorithm.simhash.MetaString.MetaString;
-import com.gpower.algorithm.simhash.htmlText.EmphasiModel;
 
 public class HtmlTextSelection {
 	// private List<CriteriaModel> criterias = null;

@@ -19,7 +19,7 @@
 		{
 			"sign": 0,
 			"note": "其他文本",
-			"criteria": ":ahas(div)"
+			"criteria": "*"
 		}
     ]
 }

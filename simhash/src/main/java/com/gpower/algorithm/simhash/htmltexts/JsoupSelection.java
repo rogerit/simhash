@@ -28,8 +28,6 @@ public class JsoupSelection {
 		return es;
 	}
 
-	
-
 	private static void DeployCriterias(HtmlTextSelection hts) {
 
 		CriteriaModel cmerror = null;
@@ -44,7 +42,7 @@ public class JsoupSelection {
 					Elements allElements = element.getAllElements();
 					Elements ses = selectElements(allElements, cm.getCriteria());
 					ses.remove();
-					// cm.setHtml(ses.toString());
+					cm.setHtml(ses.toString());
 					cm.setText(ses.text());
 
 				} else {
@@ -59,10 +57,21 @@ public class JsoupSelection {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
+
+	public static String selectedText(HtmlTextSelection hts) {
+		String text = new String("");
+		for (CriteriaModel cm : hts.getCriterias()) {
+			System.out.println(cm.getError());
+			System.out.println(cm.getText());
+			if (cm.getError() != null && cm.getText() != null) {
+				for (int i = 0; i < cm.getSign(); i++) {
+					text = text +"\n"+ cm.getText();
+				}
+			}
+		}
+		return text;
+	}
+
 	public static void main(String[] args) {
 
 		String html = new MetaString(new File("d:/temp/1.html")).getText();
@@ -75,15 +84,16 @@ public class JsoupSelection {
 		HtmlTextSelection hts = gson.fromJson(json, HtmlTextSelection.class);
 
 		// 设置筛选条件，
-		//Document doc = Jsoup.parse(html);
-		
+		// Document doc = Jsoup.parse(html);
+
 		hts.setOriginHtml(html);
 		DeployCriterias(hts);
 		System.out.println(gson.toJson(hts.getCriterias()));
-		
+
 		hts.setOriginHtml(html2);
 		DeployCriterias(hts);
 		System.out.println(gson.toJson(hts.getCriterias()));
+		System.out.println(1+selectedText(hts));
 
 	}
 }
