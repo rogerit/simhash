@@ -31,9 +31,15 @@ public class JsoupSelection {
 		return es;
 	}
 
-	private static void DeployCriterias(HtmlTextSelection hts) {
+	public static void deployCriterias(HtmlTextSelection hts) {
 
 		CriteriaModel cmerror = null;
+		if (hts.getOriginHtml() == null) {
+			System.err.println("com.gpower.algorithm.simhash.htmltexts."
+					+ "JsoupSelection.deployCriterias(HtmlTextSelection hts)"
+					+ " hts has no originhtml.");
+			return;
+		}
 		try {
 			Document doc = Jsoup.parse(hts.getOriginHtml());
 
@@ -57,7 +63,7 @@ public class JsoupSelection {
 			if (cmerror != null) {
 				cmerror.setError(e.getMessage());
 			}
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
@@ -65,12 +71,12 @@ public class JsoupSelection {
 		String text = new String("");
 		for (CriteriaModel cm : hts.getCriterias()) {
 			if (cm.getError() == null && cm.getText() != null) {
-				for (int i = 0; i < cm.getSign(); i++) {
+				for (int i = 0; i < cm.getWeight(); i++) {
 					text = text + "\n" + cm.getText();
 				}
 			}
 		}
-		System.out.println(1+text);
+		System.out.println(1 + text);
 		return text;
 	}
 
@@ -89,11 +95,11 @@ public class JsoupSelection {
 		// Document doc = Jsoup.parse(html);
 
 		hts.setOriginHtml(html);
-		DeployCriterias(hts);
+		deployCriterias(hts);
 		System.out.println(gson.toJson(hts.getCriterias()));
 
 		hts.setOriginHtml(html2);
-		DeployCriterias(hts);
+		deployCriterias(hts);
 		System.out.println(gson.toJson(hts.getCriterias()));
 		String text = selectedText(hts);
 		IWordSeg bw = new ChnsWordSeg();

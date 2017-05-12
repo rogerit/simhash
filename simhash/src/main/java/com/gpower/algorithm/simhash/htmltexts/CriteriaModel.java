@@ -11,12 +11,12 @@ public class CriteriaModel {
 	private String text = null;
 	private String error = null;
 
-	public Integer getSign() {
+	public Integer getWeight() {
 		return weight;
 	}
 
-	public void setSign(Integer sign) {
-		this.weight = sign;
+	public void setWeight(Integer weight) {
+		this.weight = weight;
 	}
 
 	public String getCriteria() {

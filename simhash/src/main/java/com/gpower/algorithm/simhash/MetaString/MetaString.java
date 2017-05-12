@@ -8,9 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import javax.xml.stream.StreamFilter;
+
 import org.jsoup.Jsoup;
 
-import com.gpower.algorithm.simhash.util.EncodingDetect;
+import com.gpower.algorithm.simhash.MetaString.EncodingDetect;
 
 public class MetaString {
 
@@ -28,13 +30,26 @@ public class MetaString {
 		this.text = str;
 	}
 	
+	public MetaString(InputStream inputStream ){
+		String str = stream2String(inputStream);
+		this.setText(str);
+	}
+	
 	public MetaString(File file) {
+		FileInputStream fis = null;
 		try {
-			FileInputStream fis = new FileInputStream(file);
+			fis = new FileInputStream(file);
 			String str = stream2String(fis);
 			this.setText(str);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally{
+			try {
+				if (fis != null){
+					fis.close();
+				}
+			} catch (IOException e) {
+			}
 		}
 
 	}

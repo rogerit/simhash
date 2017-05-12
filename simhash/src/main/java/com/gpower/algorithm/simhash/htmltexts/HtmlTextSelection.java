@@ -12,6 +12,10 @@ public class HtmlTextSelection {
 	private String originHtml = null;
 	private List<CriteriaModel> criterias = null;
 
+	@Override
+	public String toString() {
+		return "HtmlTextSelection []";
+	}
 
 	public String getOriginHtml() {
 		return originHtml;
