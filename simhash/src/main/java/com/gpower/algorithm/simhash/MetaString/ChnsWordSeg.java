@@ -21,8 +21,8 @@ public class ChnsWordSeg implements IWordSeg {
 			while ((lexeme = ik.next()) != null) {
 				word = lexeme.getLexemeText();
 				//word selection: length with 2 or more.
+				tokens.add(word);
 				if (word.length()>1){
-					tokens.add(word);
 				}
 			}
 		} catch (IOException e) {

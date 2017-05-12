@@ -8,8 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 import com.gpower.algorithm.simhash.util.EncodingDetect;
-import com.gpower.algorithm.simhash.util.HtmlTagFilter;
 
 public class MetaString {
 
@@ -83,7 +84,8 @@ public class MetaString {
 	}
 	
 	public String filteredText(){
-		return HtmlTagFilter.html2Text(this.getText());
+		//return HtmlTagFilter.html2Text(this.getText());
+		return Jsoup.parse(this.getText()).text();
 	}
 	
 	
@@ -91,12 +93,14 @@ public class MetaString {
 	public List<String> chnsTokens(){
 		IWordSeg bw = new ChnsWordSeg();
 		List<String> tokens = bw.tokens(this.filteredText());
+		System.out.println(this.filteredText());
 		return tokens;
 	}
 	
 	public List<String> neighborTokens(){
 		IWordSeg bw = new BinaryWordSeg();
 		List<String> tokens = bw.tokens(this.filteredText());
+		
 		return tokens;
 	}
 

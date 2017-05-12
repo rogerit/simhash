@@ -4,7 +4,7 @@ public class CriteriaModel {
 	public final static Integer SIGN_DEL = 0;
 	public final static Integer SIGN_NOR = 1;
 
-	private Integer sign = SIGN_NOR;
+	private Integer weight = SIGN_NOR;
 	private String note = null;
 	private String criteria = null;
 	private String html = null;
@@ -12,11 +12,11 @@ public class CriteriaModel {
 	private String error = null;
 
 	public Integer getSign() {
-		return sign;
+		return weight;
 	}
 
 	public void setSign(Integer sign) {
-		this.sign = sign;
+		this.weight = sign;
 	}
 
 	public String getCriteria() {

@@ -1,25 +1,25 @@
 {
     "criterias": [
-		
-        {
-            "sign": 3,
-			"note": "正文标题",
-            "criteria": ":not(:has(a));h1,h2,h3,h4,h5"
-        },
-        {
-            "sign": 1,
+		{
+            "weight": 1,
 			"note": "页面title",
             "criteria": "title"
         },
+        {
+            "weight": 3,
+			"note": "正文标题",
+            "criteria": ":not(:has(a));h1,h2,h3,h4,h5"
+        },
+        
 		{
-			"sign": 1,
+			"weight": 1,
 			"note": "正文",
 			"criteria": "p"
 		},
 		{
-			"sign": 0,
+			"weight": 0,
 			"note": "其他文本",
-			"criteria": "*"
+			"criteria": ":adf"
 		}
     ]
 }

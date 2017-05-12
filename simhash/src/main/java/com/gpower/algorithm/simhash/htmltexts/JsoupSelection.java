@@ -1,6 +1,7 @@
 package com.gpower.algorithm.simhash.htmltexts;
 
 import java.io.File;
+import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
@@ -10,6 +11,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
+import com.gpower.algorithm.simhash.MetaString.ChnsWordSeg;
+import com.gpower.algorithm.simhash.MetaString.IWordSeg;
 import com.gpower.algorithm.simhash.MetaString.MetaString;
 
 public class JsoupSelection {
@@ -54,21 +57,20 @@ public class JsoupSelection {
 			if (cmerror != null) {
 				cmerror.setError(e.getMessage());
 			}
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
 	public static String selectedText(HtmlTextSelection hts) {
 		String text = new String("");
 		for (CriteriaModel cm : hts.getCriterias()) {
-			System.out.println(cm.getError());
-			System.out.println(cm.getText());
-			if (cm.getError() != null && cm.getText() != null) {
+			if (cm.getError() == null && cm.getText() != null) {
 				for (int i = 0; i < cm.getSign(); i++) {
-					text = text +"\n"+ cm.getText();
+					text = text + "\n" + cm.getText();
 				}
 			}
 		}
+		System.out.println(1+text);
 		return text;
 	}
 
@@ -93,7 +95,9 @@ public class JsoupSelection {
 		hts.setOriginHtml(html2);
 		DeployCriterias(hts);
 		System.out.println(gson.toJson(hts.getCriterias()));
-		System.out.println(1+selectedText(hts));
-
+		String text = selectedText(hts);
+		IWordSeg bw = new ChnsWordSeg();
+		List<String> tokens = bw.tokens(text);
+		System.out.println(gson.toJson(tokens));
 	}
 }
