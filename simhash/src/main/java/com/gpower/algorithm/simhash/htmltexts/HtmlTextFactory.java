@@ -6,19 +6,19 @@ import java.io.InputStream;
 import com.google.gson.Gson;
 import com.gpower.algorithm.simhash.MetaString.MetaString;
 
-public class HtmlTextSelectionFactory {
+public class HtmlTextFactory {
 	private static class SingletonHolder {
-		private static final HtmlTextSelectionFactory INSTANCE = new HtmlTextSelectionFactory();
+		private static final HtmlTextFactory INSTANCE = new HtmlTextFactory();
 	}
 
-	private HtmlTextSelectionFactory() {
+	private HtmlTextFactory() {
 	}
 
-	public static final HtmlTextSelectionFactory getInstance() {
+	public static final HtmlTextFactory getInstance() {
 		return SingletonHolder.INSTANCE;
 	}
 
-	public HtmlTextSelection getHtmlTextSelection() {
+	public HtmlText getHtmlText() {
 		InputStream is = null;
 		String json =null;
 		Gson gson = new Gson();
@@ -29,6 +29,6 @@ public class HtmlTextSelectionFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return gson.fromJson(json, HtmlTextSelection.class);
+		return gson.fromJson(json, HtmlText.class);
 	}
 }

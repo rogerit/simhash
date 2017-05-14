@@ -5,25 +5,16 @@ package com.gpower.algorithm.simhash.simhash;
 import java.util.List;
 
 
+
 import com.gpower.algorithm.simhash.hash.MurmurHash;
 
 
-public class SimHash64 extends SimHashUncle<Long>{
+public class SimHash64 extends SimHashSimple<Long>{
 	private static final int BIT_LEN = 64;
 
 	private int[] bits = new int[BIT_LEN];
-
-	@Override
-	public Integer hammingDistance(Long hash1, Long hash2) {
-		long i = hash1 ^ hash2;
-		i = i - ((i >>> 1) & 0x5555555555555555L);
-		i = (i & 0x3333333333333333L) + ((i >>> 2) & 0x3333333333333333L);
-		i = (i + (i >>> 4)) & 0x0f0f0f0f0f0f0f0fL;
-		i = i + (i >>> 8);
-		i = i + (i >>> 16);
-		i = i + (i >>> 32);
-		return (int) i & 0x7f;
-	}
+	
+	
 
 	@Override
 	public void gather(Integer weight, List<String> tokens) {

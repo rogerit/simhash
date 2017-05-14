@@ -9,9 +9,12 @@ import org.wltea.analyzer.IKSegmentation;
 import org.wltea.analyzer.Lexeme;
 
 public class ChnsWordSeg implements IWordSeg {
-
+	
+	//word's less then MIN_LEN will be ignore.
+	private static final int MIN_LEN = 2;
+	
 	@Override
-	public List<String> tokens(String doc) {
+	public List<String> tokens(String doc ) {
 		StringReader reader = new StringReader(doc);
 		IKSegmentation ik = new IKSegmentation(reader, true);
 		Lexeme lexeme = null;
@@ -20,9 +23,8 @@ public class ChnsWordSeg implements IWordSeg {
 		try {
 			while ((lexeme = ik.next()) != null) {
 				word = lexeme.getLexemeText();
-				//word selection: length with 2 or more.
-				tokens.add(word);
-				if (word.length()>1){
+				if (word.length()>=MIN_LEN){
+					tokens.add(word);
 				}
 			}
 		} catch (IOException e) {

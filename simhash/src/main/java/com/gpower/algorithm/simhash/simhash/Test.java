@@ -1,28 +1,31 @@
 package com.gpower.algorithm.simhash.simhash;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.gpower.algorithm.simhash.MetaString.ChnsWordSeg;
 import com.gpower.algorithm.simhash.MetaString.IWordSeg;
 import com.gpower.algorithm.simhash.MetaString.MetaString;
 import com.gpower.algorithm.simhash.hash.Simhash;
 import com.gpower.algorithm.simhash.htmltexts.CriteriaModel;
-import com.gpower.algorithm.simhash.htmltexts.HtmlTextSelection;
-import com.gpower.algorithm.simhash.htmltexts.HtmlTextSelectionFactory;
+import com.gpower.algorithm.simhash.htmltexts.HtmlText;
+import com.gpower.algorithm.simhash.htmltexts.HtmlTextFactory;
 import com.gpower.algorithm.simhash.htmltexts.JsoupSelection;
 
 public class Test {
 	public static void main(String[] args) throws IOException {
-		HtmlTextSelectionFactory htsf = HtmlTextSelectionFactory.getInstance();
+		HtmlTextFactory htsf = HtmlTextFactory.getInstance();
 		InputStream is = ISimHash.class.getResourceAsStream("1.html");
+		//InputStream is = new FileInputStream("D:/1.html");
 		
 		String html = new MetaString(is).getText();
 		is.close();
 		
-		HtmlTextSelection hts = htsf.getHtmlTextSelection();
+		HtmlText hts = htsf.getHtmlText();
 		hts.setOriginHtml(html);
 		JsoupSelection.deployCriterias(hts);
 
@@ -45,6 +48,7 @@ public class Test {
 				shc.gather(w, tokens);
 			}
 		}
+		System.out.println(new Gson().toJson(hts.getCriterias()));
 		System.out.println(shc.hash());
 
 		Simhash sm = new Simhash();

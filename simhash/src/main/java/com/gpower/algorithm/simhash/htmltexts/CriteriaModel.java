@@ -1,5 +1,7 @@
 package com.gpower.algorithm.simhash.htmltexts;
 
+import java.util.List;
+
 public class CriteriaModel {
 	public final static Integer SIGN_DEL = 0;
 	public final static Integer SIGN_NOR = 1;
@@ -57,6 +59,13 @@ public class CriteriaModel {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	@Override
+	public String toString() {
+		return "CriteriaModel" + "\n权: " + weight + "\n注释: " + note
+				+ "\n条件: " + criteria + "\n文本: " + text + "\n错误: "
+				+ error;
 	}
 
 }

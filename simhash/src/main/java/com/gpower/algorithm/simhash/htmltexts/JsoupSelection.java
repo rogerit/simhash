@@ -31,7 +31,7 @@ public class JsoupSelection {
 		return es;
 	}
 
-	public static void deployCriterias(HtmlTextSelection hts) {
+	public static void deployCriterias(HtmlText hts) {
 
 		CriteriaModel cmerror = null;
 		if (hts.getOriginHtml() == null) {
@@ -67,7 +67,7 @@ public class JsoupSelection {
 		}
 	}
 
-	public static String selectedText(HtmlTextSelection hts) {
+	public static String selectedText(HtmlText hts) {
 		String text = new String("");
 		for (CriteriaModel cm : hts.getCriterias()) {
 			if (cm.getError() == null && cm.getText() != null) {
@@ -89,7 +89,7 @@ public class JsoupSelection {
 		String json = new MetaString(new File("conf/htmlTextSelection.json"))
 				.getText();
 		Gson gson = new Gson();
-		HtmlTextSelection hts = gson.fromJson(json, HtmlTextSelection.class);
+		HtmlText hts = gson.fromJson(json, HtmlText.class);
 
 		// 设置筛选条件，
 		// Document doc = Jsoup.parse(html);
