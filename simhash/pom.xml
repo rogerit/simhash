@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gpower.algorithm</groupId>
-	<artifactId>simhash</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<groupId>com.gpower</groupId>
+	<artifactId>algorithm-simhash</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
 
 	<dependencies>
@@ -24,15 +24,9 @@
 			<groupId>IKAnalyzer</groupId>
 			<artifactId>IKAnalyzer</artifactId>
 			<version>3.2.8</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/IKAnalyzer3.2.8.jar</systemPath>
 		</dependency>
 
-		<dependency>
-			<groupId>org.ansj</groupId>
-			<artifactId>ansj_seg</artifactId>
-			<version>5.1.1</version>
-		</dependency>
+		
 
 		<dependency>
 			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
@@ -55,6 +49,46 @@
 
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.cyan.Action</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
 
 
 		</plugins>

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.gpower.algorithm.simhash.MetaString.MetaString;
+import com.gpower.algorithm.simhash.modifystring.MetaString;
 
 public class HtmlText {
 	// private List<CriteriaModel> criterias = null;

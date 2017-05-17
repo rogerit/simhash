@@ -3,7 +3,6 @@ package com.gpower.algorithm.simhash.simhash;
 
 import java.util.List;
 
-import com.gpower.algorithm.simhash.hash.MurmurHash;
 
 
 public class SimHash32 extends SimHashSimple<Integer> {

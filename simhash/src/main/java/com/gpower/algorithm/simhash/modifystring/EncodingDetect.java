@@ -1,4 +1,4 @@
-package com.gpower.algorithm.simhash.MetaString;
+package com.gpower.algorithm.simhash.modifystring;
 
 import java.io.BufferedReader;
 import java.io.File;

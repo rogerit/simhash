@@ -1,4 +1,4 @@
-package com.gpower.algorithm.simhash.MetaString;
+package com.gpower.algorithm.simhash.modifystring;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +12,7 @@ import javax.xml.stream.StreamFilter;
 
 import org.jsoup.Jsoup;
 
-import com.gpower.algorithm.simhash.MetaString.EncodingDetect;
+import com.gpower.algorithm.simhash.modifystring.EncodingDetect;
 
 public class MetaString {
 

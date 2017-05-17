@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gpower.algorithm.simhash.MetaString;
+package com.gpower.algorithm.simhash.modifystring;
 
 import java.util.LinkedList;
 import java.util.List;

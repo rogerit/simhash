@@ -6,7 +6,6 @@ import java.util.List;
 
 
 
-import com.gpower.algorithm.simhash.hash.MurmurHash;
 
 
 public class SimHash64 extends SimHashSimple<Long>{

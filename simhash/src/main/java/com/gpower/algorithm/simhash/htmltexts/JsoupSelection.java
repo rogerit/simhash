@@ -11,9 +11,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
-import com.gpower.algorithm.simhash.MetaString.ChnsWordSeg;
-import com.gpower.algorithm.simhash.MetaString.IWordSeg;
-import com.gpower.algorithm.simhash.MetaString.MetaString;
+import com.gpower.algorithm.simhash.modifystring.ChnsWordSeg;
+import com.gpower.algorithm.simhash.modifystring.IWordSeg;
+import com.gpower.algorithm.simhash.modifystring.MetaString;
 
 public class JsoupSelection {
 
@@ -31,14 +31,14 @@ public class JsoupSelection {
 		return es;
 	}
 
-	public static void deployCriterias(HtmlText hts) {
+	public static HtmlText deployCriterias(HtmlText hts) {
 
 		CriteriaModel cmerror = null;
 		if (hts.getOriginHtml() == null) {
 			System.err.println("com.gpower.algorithm.simhash.htmltexts."
 					+ "JsoupSelection.deployCriterias(HtmlTextSelection hts)"
 					+ " hts has no originhtml.");
-			return;
+			return hts;
 		}
 		try {
 			Document doc = Jsoup.parse(hts.getOriginHtml());
@@ -65,6 +65,7 @@ public class JsoupSelection {
 			}
 			// e.printStackTrace();
 		}
+		return hts;
 	}
 
 	public static String selectedText(HtmlText hts) {
