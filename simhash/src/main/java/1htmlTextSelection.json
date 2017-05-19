@@ -1,0 +1,27 @@
+{
+    "criterias": [
+    
+		{
+            "weight": 0,
+			"note": "页面title",
+            "criteria": "title"
+        },
+        {
+            "weight": 0,
+			"note": "正文标题",
+            "criteria": ":not(:has(a));h1,h2,h3,h4,h5"
+        },
+        
+		{
+			"weight": 0,
+			"note": "正文",
+			"criteria": "p"
+		},
+		{
+			"weight": 1,
+			"note": "其他文本",
+			"criteria": "*"
+		}
+		
+    ]
+}
