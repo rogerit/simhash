@@ -1,6 +1,7 @@
 package com.gpower.algorithm.simhash.modifystring;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -87,6 +88,7 @@ public class MetaString {
 		}
 	}
 
+	
 	private String stream2String(InputStream instreams) {
 		BufferedInputStream bfis = null;
 		try {
@@ -96,7 +98,7 @@ public class MetaString {
 			bfis = new BufferedInputStream(instreams);
 			tmp = bfis.read(bytes);
 			String encode = EncodingDetect.getJavaEncode(bytes);
-			String str = new String(bytes,encode);
+			String str = new String(bytes,0,tmp,encode);
 			while ((tmp = bfis.read(bytes)) != -1) {
 				str = str + new String(bytes,0,tmp,encode);
 			}
@@ -106,7 +108,6 @@ public class MetaString {
 		} 
 		return null;
 	}
-
 	/*
 	 * private String stream2String(InputStream instreams) { try { int length =
 	 * instreams.available(); byte[] buffer = new byte[length];

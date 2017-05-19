@@ -84,12 +84,13 @@ public class JsoupSelection {
 	public static void main(String[] args) {
 
 		String html = new MetaString(new File("d:/temp/1.html")).getText();
-		String html2 = new MetaString(new File("d:/temp/2.html")).getText();
+		String html2 = new MetaString(new File("d:/temp/1.html")).getText();
 
 		// json 提供测试用例的html配置文件
-		String json = new MetaString(new File("conf/htmlTextSelection.json"))
+		String json = new MetaString(new File("d:/temp/htmlTextSelection.json"))
 				.getText();
 		Gson gson = new Gson();
+		json = json.trim();
 		HtmlText hts = gson.fromJson(json, HtmlText.class);
 
 		// 设置筛选条件，
