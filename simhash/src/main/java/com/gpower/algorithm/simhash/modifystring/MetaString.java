@@ -88,15 +88,17 @@ public class MetaString {
 	}
 
 	private String stream2String(InputStream instreams) {
+		BufferedInputStream bfis = null;
 		try {
 			int SIZE = 2048;
 			byte[] bytes = new byte[SIZE];
 			int tmp = 0;
-			tmp = instreams.read(bytes);
+			bfis = new BufferedInputStream(instreams);
+			tmp = bfis.read(bytes);
 			String encode = EncodingDetect.getJavaEncode(bytes);
 			String str = new String(bytes,encode);
-			while ((tmp = instreams.read(bytes)) != -1) {
-				str = str + new String(bytes,encode);
+			while ((tmp = bfis.read(bytes)) != -1) {
+				str = str + new String(bytes,0,tmp,encode);
 			}
 			return str;
 		} catch (IOException e) {
@@ -139,10 +141,9 @@ public class MetaString {
 	public static void main(String[] args)  {
 		InputStream instreams=null;
 		try {
-			instreams = new FileInputStream("d:/temp/1.html");
-			String s = new MetaString(instreams).getText();
+			
+			String s = new MetaString(new URL("http://dzb.bucea.edu.cn/")).getText();
 			System.out.println(s);
-			instreams.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
