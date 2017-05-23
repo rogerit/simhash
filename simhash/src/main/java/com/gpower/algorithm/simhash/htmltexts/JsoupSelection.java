@@ -90,7 +90,6 @@ public class JsoupSelection {
 		String json = new MetaString(new File("d:/temp/htmlTextSelection.json"))
 				.getText();
 		Gson gson = new Gson();
-		json = json.trim();
 		HtmlText hts = gson.fromJson(json, HtmlText.class);
 
 		// 设置筛选条件，

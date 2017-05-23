@@ -28,7 +28,7 @@ public class Main {
 	public static final Gson gson = new Gson();
 
 	public static void main(String[] args) throws IOException {
-		int len = 2;
+		int len = 10;
 		List<Integer> hash32s = new ArrayList<Integer>();
 		List<Long> hash64s = new ArrayList<Long>();
 		for (int i = 0; i < len; i++) {
