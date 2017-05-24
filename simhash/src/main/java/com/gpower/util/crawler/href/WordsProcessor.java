@@ -30,14 +30,11 @@ public class WordsProcessor implements IHrefDocProcessor<String, String> {
 				this.wordsUrl.put(hrefMapModel.getHref(), s + str);
 			}
 		}
-		if (wordsUrl.containsKey(hrefMapModel.getHref())) {
-			System.out.println("000000000000~~~~~~" + wordsUrl.get(hrefMapModel.getHref()));
-		}
 	}
 
 	@Override
 	public Map<String, String> gatheredMap() {
-		return null;
+		return this.wordsUrl;
 	}
 
 }

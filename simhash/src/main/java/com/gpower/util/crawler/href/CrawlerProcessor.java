@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ChildrenHrefProcessor implements
+public class CrawlerProcessor implements
 		IHrefDocProcessor<String, HrefMapModel> {
 
 	private String basePath = null;
@@ -17,7 +17,7 @@ public class ChildrenHrefProcessor implements
 	private Map<String, HrefMapModel> encounteredHref = null;
 
 
-	public ChildrenHrefProcessor() {
+	public CrawlerProcessor() {
 	}
 
 	/*
@@ -27,7 +27,7 @@ public class ChildrenHrefProcessor implements
 	 * 
 	 * @basePath: Filter the HMM that not start with basePath;
 	 */
-	public ChildrenHrefProcessor(String basePath,
+	public CrawlerProcessor(String basePath,
 			HrefMapModelBuilder hrefMapModelBuilder) {
 		this.basePath = basePath;
 		this.hrefMapModelBuilder = hrefMapModelBuilder;
@@ -55,7 +55,7 @@ public class ChildrenHrefProcessor implements
 				// to PROCESS_IG
 				if (!absHref.startsWith(this.basePath)) {
 					thfm.setStatus(HrefMapModel.PROCESS_EL);
-					System.out.println("external link");
+					System.out.println("external: "+absHref);
 				}
 				this.encounteredHref.put(absHref, thfm);
 			}

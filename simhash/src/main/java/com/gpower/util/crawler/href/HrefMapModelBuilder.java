@@ -28,7 +28,7 @@ public class HrefMapModelBuilder {
 		 */
 		this.hrefDocProcessor = new ArrayList<IHrefDocProcessor>();
 		
-		ChildrenHrefProcessor childrenHrefProcessor = new ChildrenHrefProcessor(
+		CrawlerProcessor childrenHrefProcessor = new CrawlerProcessor(
 				basePath, this);
 		
 		this.hrefDocProcessor.add(childrenHrefProcessor);

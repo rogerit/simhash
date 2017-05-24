@@ -2,7 +2,6 @@ package com.gpower.algorithm.simhash;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import com.gpower.algorithm.simhash.htmltexts.CriteriaModel;
@@ -10,23 +9,31 @@ import com.gpower.algorithm.simhash.htmltexts.HtmlText;
 import com.gpower.algorithm.simhash.htmltexts.HtmlTextFactory;
 import com.gpower.algorithm.simhash.htmltexts.JsoupSelection;
 import com.gpower.algorithm.simhash.modifystring.ChnsWordSeg;
-import com.gpower.algorithm.simhash.modifystring.MetaString;
 import com.gpower.algorithm.simhash.simhash.ISimHash;
 import com.gpower.algorithm.simhash.simhash.SimHash64;
 import com.gpower.algorithm.simhash.simhash.SimHashSimple;
 
 public class SimHash {
-	private static HtmlText htmlText = HtmlTextFactory.getInstance()
-			.getHtmlText();
+	private HtmlText htmlText = null;
 
-	public static void setHtmlText(HtmlText htmlText) {
-		SimHash.htmlText = htmlText;
+	public void setHtmlText(HtmlText htmlText) {
+		this.htmlText = htmlText;
+	}
+	
+	public SimHash() {
+		this.htmlText = HtmlTextFactory.getInstance()
+				.getHtmlText();
+	}
+	
+	public SimHash(String configfile) {
+		this.htmlText = HtmlTextFactory.getInstance()
+				.getHtmlText(configfile);
 	}
 
-	public static Long Hash64(String html) {
+	public Long Hash64(String html) {
 		// remove tags\scripts\spacing from html according to criteria.
-		htmlText.setOriginHtml(html);
-		htmlText = JsoupSelection.deployCriterias(htmlText);
+		this.htmlText.setOriginHtml(html);
+		this.htmlText = JsoupSelection.deployCriterias(htmlText);
 		// compute hashcode
 		ISimHash<Long> sh64 = new SimHash64();
 		ChnsWordSeg cws = new ChnsWordSeg();

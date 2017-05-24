@@ -8,7 +8,6 @@ import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-
 @SuppressWarnings("rawtypes")
 public class HrefMapModel {
 
@@ -22,7 +21,6 @@ public class HrefMapModel {
 	private List<IHrefDocProcessor> hrefDocProcessor = null;
 	private String href = null;
 	private int status = PROCESS_TP;
-
 
 	public String getHref() {
 		return href;
@@ -110,23 +108,29 @@ public class HrefMapModel {
 	public static void main(String[] args) {
 		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
 				"http://dzb.bucea.edu.cn/");
+		// add sensitive words processor
 		List<String> sensitiveWords = new ArrayList<String>();
 		sensitiveWords.add("基本标准");
 		sensitiveWords.add("高等教育研究室");
 		sensitiveWords.add("安全管理");
-		WordsProcessor sensitiveWordsProcessor = new WordsProcessor(sensitiveWords);
+		WordsProcessor sensitiveWordsProcessor = new WordsProcessor(
+				sensitiveWords);
 		hmmb.getHrefDocProcessor().add(sensitiveWordsProcessor);
-		
-		
-		
-		
-		
-		
-		
+
+		// simhash processor
+		SimHashProcessor simpcr = new SimHashProcessor();
+		hmmb.getHrefDocProcessor().add(simpcr);
+
+		// build instance of class HrefMapModel
 		HrefMapModel hmm = hmmb.build("http://dzb.bucea.edu.cn/");
+
+		// start crawler
 		hmm.deepFirst(hmm);
-		IHrefDocProcessor<String, HrefMapModel> iHrefDocProcessor = hmmb.getHrefDocProcessor().get(0);
-		Map<String, HrefMapModel> encounteredHref = iHrefDocProcessor.gatheredMap();
+
+		IHrefDocProcessor<String, HrefMapModel> iHrefDocProcessor = hmmb
+				.getHrefDocProcessor().get(0);
+		Map<String, HrefMapModel> encounteredHref = iHrefDocProcessor
+				.gatheredMap();
 		System.out.println(encounteredHref.size());
 	}
 
