@@ -2,6 +2,7 @@ package com.gpower.util.crawler.href;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,8 +67,8 @@ public class HrefMapModel {
 		}
 
 		try {
-			doc = Jsoup.connect(this.href).get();
 			System.out.println(this.href);
+			doc = Jsoup.connect(this.href).get();
 
 			for (IHrefDocProcessor hdp : this.hrefDocProcessor) {
 				try {
@@ -78,9 +79,10 @@ public class HrefMapModel {
 			}
 
 			this.setStatus(PROCESS_ED);
-		} catch (IOException e1) {
+		} catch (Exception e1) {
+			//it's Exception, not IOException!!!. to catch any none IOException throw by Jsoup.
 			this.setStatus(HrefMapModel.PROCESS_ERR);
-			System.out.println(this.href);
+			System.err.println(this.href);
 		}
 	}
 
@@ -108,10 +110,11 @@ public class HrefMapModel {
 
 	public static void main(String[] args) {
 		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
-				"http://www.gpowersoft.com/");
-/*		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
-				"http://dzb.bucea.edu.cn/");
-*/		// add sensitive words processor
+				"http://www.cueb.edu.cn/");
+		/*
+		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
+		 * "http://dzb.bucea.edu.cn/");
+		 */// add sensitive words processor
 		List<String> sensitiveWords = new ArrayList<String>();
 		sensitiveWords.add("基本标准");
 		sensitiveWords.add("高等教育研究室");
@@ -123,17 +126,15 @@ public class HrefMapModel {
 		// simhash processor
 		SimHashProcessor simpcr = new SimHashProcessor();
 		hmmb.getHrefDocProcessor().add(simpcr);
-		
+
 		// .doc .xlsx filter processor
 		FilterProcessor ftrpcr = new FilterProcessor();
 		hmmb.getHrefDocProcessor().add(0, ftrpcr);
-		
 
 		// build instance of class HrefMapModel
-		HrefMapModel hmm = hmmb.build("http://www.gpowersoft.com/");
-		//HrefMapModel hmm = hmmb.build("http://dzb.bucea.edu.cn/");
+		HrefMapModel hmm = hmmb.build("http://www.cueb.edu.cn/");
+		// HrefMapModel hmm = hmmb.build("http://dzb.bucea.edu.cn/");
 
-		 
 		// start crawler
 		hmm.deepFirst(hmm);
 
@@ -144,6 +145,26 @@ public class HrefMapModel {
 		System.out.println(encounteredHref.size());
 		System.out.println(ftrpcr.gatheredMap().size());
 		System.out.println(simpcr.gatheredMap().size());
-	}
 
+		Map<String, String> dangerURL = new HashMap<String, String>();
+		
+		//遍历encounteredHref
+		for (HrefMapModel hparent : encounteredHref.values()) {
+			//查看子href
+			for (HrefMapModel childhmm : hparent.childrenHrefMap.values()) {
+				//是否是外链
+				if (childhmm.status == HrefMapModel.PROCESS_EL) {
+					String str = "";
+					if (dangerURL.containsKey(childhmm.getHref())) {
+						//获取dangerURL的值
+						str = dangerURL.get(childhmm.getHref()) + ",";
+					}
+					//将父hparent追加至dangerURL的值中
+					str = str + hparent.getHref();
+					dangerURL.put(childhmm.getHref(), str);
+				}
+			}
+		}
+
+	}
 }
