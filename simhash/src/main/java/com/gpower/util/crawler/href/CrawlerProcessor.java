@@ -1,6 +1,7 @@
 package com.gpower.util.crawler.href;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.jsoup.nodes.Document;
@@ -15,7 +16,6 @@ public class CrawlerProcessor implements
 	private HrefMapModelBuilder hrefMapModelBuilder = null;
 
 	private Map<String, HrefMapModel> encounteredHref = null;
-
 
 	public CrawlerProcessor() {
 	}
@@ -37,13 +37,13 @@ public class CrawlerProcessor implements
 	@Override
 	public void process(Document doc, HrefMapModel hrefMapModel) {
 		Elements es = doc.getElementsByTag("a");
-		
-		//this only use to put the root href into encounteredHref
-		if (!this.encounteredHref.containsKey(hrefMapModel.getHref())){
+
+		// this only use to put the root href into encounteredHref
+		if (!this.encounteredHref.containsKey(hrefMapModel.getHref())) {
 			this.encounteredHref.put(hrefMapModel.getHref(), hrefMapModel);
 		}
 
-		hrefMapModel.setChildrenHrefMap(new HashMap<String, HrefMapModel>());
+		hrefMapModel.setChildrenHrefSet(new HashSet<HrefMapModel>());
 
 		for (Element e : es) {
 			String absHref = e.attr("abs:href");
@@ -55,12 +55,12 @@ public class CrawlerProcessor implements
 				// to PROCESS_IG
 				if (!absHref.startsWith(this.basePath)) {
 					thfm.setStatus(HrefMapModel.PROCESS_EL);
-					System.out.println("external: "+absHref);
+					System.out.println("external: " + absHref + "~");
 				}
 				this.encounteredHref.put(absHref, thfm);
 			}
 
-			hrefMapModel.getChildrenHrefMap().put(absHref,
+			hrefMapModel.getChildrenHrefSet().add(
 					this.encounteredHref.get(absHref));
 		}
 		// System.out.println(this.visitedHref.size());
@@ -84,7 +84,7 @@ public class CrawlerProcessor implements
 
 	@Override
 	public Map<String, HrefMapModel> gatheredMap() {
-		
+
 		return encounteredHref;
 	}
 
