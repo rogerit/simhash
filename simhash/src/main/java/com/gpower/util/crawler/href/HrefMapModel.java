@@ -1,6 +1,5 @@
 package com.gpower.util.crawler.href;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -160,7 +159,7 @@ public class HrefMapModel {
 				continue;
 			for (HrefMapModel childhmm : hparent.getChildrenHrefSet()) {
 				// 是否是外链
-				if (childhmm.status == HrefMapModel.PROCESS_EL) {
+				if (childhmm.status == HrefMapModel.PROCESS_ERR) {
 					String str = "";
 					if (dangerURL.containsKey(childhmm.getHref())) {
 						// 获取dangerURL的值
@@ -171,6 +170,12 @@ public class HrefMapModel {
 					dangerURL.put(childhmm.getHref(), str);
 				}
 			}
+		}
+		
+		for(Map.Entry<String, String> m:dangerURL.entrySet()){
+			System.out.println("!!!!!!!!!!!!!!!!");
+			System.out.println(m.getKey()+"~~"+m.getValue());
+			System.out.println("!!!!!!!!!!!!!!!!");
 		}
 
 	}

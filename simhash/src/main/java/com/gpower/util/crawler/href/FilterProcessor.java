@@ -20,12 +20,16 @@ public class FilterProcessor implements IHrefDocProcessor<String, String> {
 		Elements as = doc.getElementsByTag("a");
 		for (Element a : as) {
 			String absHref = a.attr("abs:href");
-			if (absHref.contains(".doc") || absHref.contains(".jpg")
+			if (absHref==""||absHref.contains(".doc") || absHref.contains(".jpg")
 					|| absHref.contains(".rar") || absHref.contains(".pdf")
-					|| absHref.contains("zip")||absHref.contains(".xls")) {
+					|| absHref.contains("zip") || absHref.contains(".xls")
+					|| absHref.contains("@") || absHref.contains("mailto")
+					|| absHref.contains("void(0)") || absHref.contains("window.print()")
+					|| absHref.contains("#") || absHref.contains(";")) {
 				a.remove();
+
 				this.hrefFilteredNodes.put(absHref, null);
-			} 
+			}
 		}
 	}
 

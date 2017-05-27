@@ -47,7 +47,7 @@ public class CrawlerProcessor implements
 
 		for (Element e : es) {
 			String absHref = e.attr("abs:href");
-			absHref = absHref.replace("#", "");
+			//absHref = absHref.replace("#", "");
 			if (!this.encounteredHref.containsKey(absHref)) {
 
 				HrefMapModel thfm = this.hrefMapModelBuilder.build(absHref);
