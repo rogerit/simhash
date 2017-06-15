@@ -111,13 +111,20 @@ public class HrefMapModel {
 	}
 
 	public static void main(String[] args) {
-		/*
-		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
-		 * "http://www.cueb.edu.cn/");
-		 */
 
 		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
-				"http://dzb.bucea.edu.cn/");
+				"http://www.gpowersoft.com/");
+/*		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
+				"http://www.cueb.edu.cn/");
+*/
+		/*
+		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
+		 * "http://www.bjfsh.gov.cn/");
+		 */
+		/*
+		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
+		 * "http://dzb.bucea.edu.cn/");
+		 */
 		// add sensitive words processor
 		List<String> sensitiveWords = new ArrayList<String>();
 		sensitiveWords.add("基本标准");
@@ -130,14 +137,20 @@ public class HrefMapModel {
 		// simhash processor
 		SimHashProcessor simpcr = new SimHashProcessor();
 		hmmb.getHrefDocProcessor().add(simpcr);
+		
+		// hash processor 
+		HashProcessor hashpcr = new HashProcessor();
+		hmmb.getHrefDocProcessor().add(hashpcr);
 
 		// .doc .xlsx filter processor
 		FilterProcessor ftrpcr = new FilterProcessor();
 		hmmb.getHrefDocProcessor().add(0, ftrpcr);
 
 		// build instance of class HrefMapModel
-		// HrefMapModel hmm = hmmb.build("http://www.cueb.edu.cn/");
-		HrefMapModel hmm = hmmb.build("http://dzb.bucea.edu.cn/");
+		HrefMapModel hmm = hmmb.build("http://www.gpowersoft.com/");
+		//HrefMapModel hmm = hmmb.build("http://www.cueb.edu.cn/");
+		// HrefMapModel hmm = hmmb.build("http://dzb.bucea.edu.cn/");
+		// HrefMapModel hmm = hmmb.build("http://www.bjfsh.gov.cn/");
 
 		// start crawler
 		hmm.deepFirst(hmm);
@@ -171,10 +184,10 @@ public class HrefMapModel {
 				}
 			}
 		}
-		
-		for(Map.Entry<String, String> m:dangerURL.entrySet()){
+
+		for (Map.Entry<String, String> m : dangerURL.entrySet()) {
 			System.out.println("!!!!!!!!!!!!!!!!");
-			System.out.println(m.getKey()+"~~"+m.getValue());
+			System.out.println(m.getKey() + "~~" + m.getValue());
 			System.out.println("!!!!!!!!!!!!!!!!");
 		}
 

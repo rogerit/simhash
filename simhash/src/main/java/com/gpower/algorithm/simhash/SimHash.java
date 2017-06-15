@@ -1,8 +1,11 @@
 package com.gpower.algorithm.simhash;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+
+import org.jsoup.Jsoup;
 
 import com.gpower.algorithm.simhash.htmltexts.CriteriaModel;
 import com.gpower.algorithm.simhash.htmltexts.HtmlText;
@@ -50,12 +53,12 @@ public class SimHash {
 		return SimHashSimple.hammingDistance(h1, h2);
 	}
 
-	public static void main(String[] args) throws MalformedURLException {
-		String conf = "htmlTextSelection.json";
-		HtmlText ht = HtmlTextFactory.getInstance().getHtmlText();
-		if (ht != null) {
-			System.out.println(ht.getCriterias());
-		}
+	public static void main(String[] args) throws IOException {
+		SimHash sh = new SimHash();
+		String html = Jsoup.connect("http://www.buct.edu.cn/bc/71403.htm").get().toString();
+		System.out.println(html.hashCode());
+		Long h1 = sh.Hash64(html);
+		System.out.println(h1);
 	}
 
 }

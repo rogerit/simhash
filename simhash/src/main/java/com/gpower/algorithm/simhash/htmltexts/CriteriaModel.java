@@ -1,6 +1,5 @@
 package com.gpower.algorithm.simhash.htmltexts;
 
-import java.util.List;
 
 public class CriteriaModel {
 	public final static Integer SIGN_DEL = 0;

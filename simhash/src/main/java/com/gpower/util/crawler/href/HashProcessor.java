@@ -17,6 +17,8 @@ public class HashProcessor implements IHrefDocProcessor<String, Integer> {
 	public void process(Document doc, HrefMapModel hrefMapModel) {
 		Integer hash = doc.toString().hashCode();
 		this.hrefHash.put(hrefMapModel.getHref(), hash);
+		System.out.println(hrefMapModel.getHref()+"      hassssssssssh");
+		System.out.println(hash);
 	}
 
 	@Override
