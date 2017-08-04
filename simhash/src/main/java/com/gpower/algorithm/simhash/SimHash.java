@@ -55,10 +55,9 @@ public class SimHash {
 
 	public static void main(String[] args) throws IOException {
 		SimHash sh = new SimHash();
-		String html = Jsoup.connect("http://www.buct.edu.cn/bc/71403.htm").get().toString();
+		String html = Jsoup.connect("http://www.buct.edu.cn/").get().toString();
 		System.out.println(html.hashCode());
 		Long h1 = sh.Hash64(html);
 		System.out.println(h1);
 	}
-
 }

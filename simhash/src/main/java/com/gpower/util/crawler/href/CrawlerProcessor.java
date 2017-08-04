@@ -55,7 +55,6 @@ public class CrawlerProcessor implements
 				// to PROCESS_IG
 				if (!absHref.startsWith(this.basePath)) {
 					thfm.setStatus(HrefMapModel.PROCESS_EL);
-					System.out.println("external: " + absHref + "~");
 				}
 				this.encounteredHref.put(absHref, thfm);
 			}

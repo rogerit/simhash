@@ -7,11 +7,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
+import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 
 @SuppressWarnings("rawtypes")
 public class HrefMapModel {
 
+	public static final int PROCESS_NH = 3; // not html,
+											// maybe:.jgp.doc.rar.pdf...;
 	public static final int PROCESS_ERR = 2; // error;
 	public static final int PROCESS_ED = 1; // has been processED;
 	public static final int PROCESS_EL = 1001; // extern link
@@ -68,7 +71,7 @@ public class HrefMapModel {
 		}
 
 		try {
-			System.out.println(this.href);
+			//System.out.println(this.href);
 			doc = Jsoup.connect(this.href).get();
 
 			for (IHrefDocProcessor hdp : this.hrefDocProcessor) {
@@ -81,10 +84,15 @@ public class HrefMapModel {
 
 			this.setStatus(PROCESS_ED);
 		} catch (Exception e1) {
-			// it's Exception, not IOException!!!. to catch any none IOException
+			// it's Exception, not IOException!!!. to catch any not\is IOException
 			// throw by Jsoup.
-			this.setStatus(HrefMapModel.PROCESS_ERR);
-			System.err.println(this.href);
+			if (e1 instanceof UnsupportedMimeTypeException){
+				this.setStatus(PROCESS_NH);
+				System.err.println("非html连接" + this.href);
+			}else{
+				this.setStatus(HrefMapModel.PROCESS_ERR);
+				System.err.println("错误连接："+this.href);
+			}
 		}
 	}
 
@@ -113,10 +121,15 @@ public class HrefMapModel {
 	public static void main(String[] args) {
 
 		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
-				"http://www.gpowersoft.com/");
-/*		HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
-				"http://www.cueb.edu.cn/");
-*/
+				"http://www.bjfsh.gov.cn/");
+		/*
+		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
+		 * "http://localhost:8080/hmabc/hello");
+		 */
+		/*
+		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
+		 * "http://www.cueb.edu.cn/");
+		 */
 		/*
 		 * HrefMapModelBuilder hmmb = new HrefMapModelBuilder(
 		 * "http://www.bjfsh.gov.cn/");
@@ -137,8 +150,8 @@ public class HrefMapModel {
 		// simhash processor
 		SimHashProcessor simpcr = new SimHashProcessor();
 		hmmb.getHrefDocProcessor().add(simpcr);
-		
-		// hash processor 
+
+		// hash processor
 		HashProcessor hashpcr = new HashProcessor();
 		hmmb.getHrefDocProcessor().add(hashpcr);
 
@@ -147,8 +160,9 @@ public class HrefMapModel {
 		hmmb.getHrefDocProcessor().add(0, ftrpcr);
 
 		// build instance of class HrefMapModel
-		HrefMapModel hmm = hmmb.build("http://www.gpowersoft.com/");
-		//HrefMapModel hmm = hmmb.build("http://www.cueb.edu.cn/");
+		HrefMapModel hmm = hmmb.build("http://www.bjfsh.gov.cn/");
+		// HrefMapModel hmm = hmmb.build("http://localhost:8080/hmabc/hello");
+		// HrefMapModel hmm = hmmb.build("http://www.cueb.edu.cn/");
 		// HrefMapModel hmm = hmmb.build("http://dzb.bucea.edu.cn/");
 		// HrefMapModel hmm = hmmb.build("http://www.bjfsh.gov.cn/");
 
@@ -163,33 +177,28 @@ public class HrefMapModel {
 		System.out.println(ftrpcr.gatheredMap().size());
 		System.out.println(simpcr.gatheredMap().size());
 
+		Map<String, Number> gatheredMap = simpcr.gatheredMap();
+		for (Map.Entry<String, Number> entry : gatheredMap.entrySet()) {
+			System.out.println(entry.getKey() + "  " + entry.getValue());
+		}
+
 		Map<String, String> dangerURL = new HashMap<String, String>();
 
-		// 遍历encounteredHref
-		for (HrefMapModel hparent : encounteredHref.values()) {
-			// 查看子href
-			if (hparent.getChildrenHrefSet() == null)
-				continue;
-			for (HrefMapModel childhmm : hparent.getChildrenHrefSet()) {
-				// 是否是外链
-				if (childhmm.status == HrefMapModel.PROCESS_ERR) {
-					String str = "";
-					if (dangerURL.containsKey(childhmm.getHref())) {
-						// 获取dangerURL的值
-						str = dangerURL.get(childhmm.getHref()) + ",";
-					}
-					// 将父hparent追加至dangerURL的值中
-					str = str + hparent.getHref();
-					dangerURL.put(childhmm.getHref(), str);
-				}
-			}
-		}
-
-		for (Map.Entry<String, String> m : dangerURL.entrySet()) {
-			System.out.println("!!!!!!!!!!!!!!!!");
-			System.out.println(m.getKey() + "~~" + m.getValue());
-			System.out.println("!!!!!!!!!!!!!!!!");
-		}
+		/*
+		 * // 遍历encounteredHref for (HrefMapModel hparent :
+		 * encounteredHref.values()) { // 查看子href if
+		 * (hparent.getChildrenHrefSet() == null) continue; for (HrefMapModel
+		 * childhmm : hparent.getChildrenHrefSet()) { // 是否是外链 if
+		 * (childhmm.status == HrefMapModel.PROCESS_ERR) { String str = ""; if
+		 * (dangerURL.containsKey(childhmm.getHref())) { // 获取dangerURL的值 str =
+		 * dangerURL.get(childhmm.getHref()) + ","; } //
+		 * 将父hparent追加至dangerURL的值中 str = str + hparent.getHref();
+		 * dangerURL.put(childhmm.getHref(), str); } } }
+		 * 
+		 * for (Map.Entry<String, String> m : dangerURL.entrySet()) {
+		 * System.out.println("!!!!!!!!!!!!!!!!"); System.out.println(m.getKey()
+		 * + "~~" + m.getValue()); System.out.println("!!!!!!!!!!!!!!!!"); }
+		 */
 
 	}
 }
